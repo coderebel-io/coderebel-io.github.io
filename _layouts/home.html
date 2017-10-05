@@ -1,0 +1,38 @@
+--- 
+layout: default 
+---
+
+<div class="home">
+    {{ content }}
+
+    <div class="excerpt">
+        {% for post in site.posts limit:1 %}
+        <a href="{{ post.url | relative_url }}" class="post_excertp_title">
+            <h1>{{post.title}}</h1>
+        </a>
+        <span class="post-date">{{ post.date | date: "%d/%m/%Y" }}</span> {% include author.html %}
+        <!-- <span class="post-categories">
+                [{% for category in post.categories %}<a href="{{site.baseurl}}/categories/#{{category|slugize}}">{{category}}</a>{% unless forloop.last %}, {% endunless %}{%endfor%}]
+        </span> -->
+        {% if post.excerpt %} {{ post.excerpt }}
+        <a href="{{ post.url | relative_url }}" class="continue-reading">continuar lendo</a> {% endif %} {% endfor %}
+    </div>
+    {% assign recent_posts = site.posts %} {% if recent_posts.size > 1 %}
+    <div class="recent-posts">
+        <h2>Últimas postagens</h2>
+        <ul class="post-list">
+            {% for post in recent_posts offset: 1 limit: 15 %}
+            <li>
+                <h3>
+                    <span class="post-date">{{ post.date | date: "%d/%m/%Y" }}</span>
+                    <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+                </h3>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p> -->
+
+</div>
